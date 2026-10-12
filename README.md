@@ -122,14 +122,6 @@ Open the folder in VS Code and press `F5` to launch the debugger. The `debug-` p
 
 ---
 
-## Code Signing
-
-On Apple Silicon, the linker **automatically** ad-hoc signs compiled executables — no manual `codesign` step is needed for the lesson binaries.
-
-`make setup` explicitly signs `lib/libbotan-3.dylib` because dynamic libraries built outside the normal toolchain sometimes need to be re-signed before macOS will load them. This is handled automatically by the setup target.
-
----
-
 ## Clean
 
 Remove compiled lesson binaries:

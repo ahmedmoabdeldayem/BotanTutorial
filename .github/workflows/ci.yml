@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build All Lessons
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Cache Botan build
+        id: cache-botan
+        uses: actions/cache@v4
+        with:
+          path: |
+            include/
+            lib/
+            bin/
+          key: botan-${{ runner.os }}-${{ hashFiles('.gitmodules') }}-${{ github.sha }}
+          restore-keys: |
+            botan-${{ runner.os }}-${{ hashFiles('.gitmodules') }}-
+
+      - name: Build Botan from source
+        if: steps.cache-botan.outputs.cache-hit != 'true'
+        run: make setup
+
+      - name: Build all lessons
+        run: |
+          make 01_hashing 02_aes_gcm 02b_aes_cbc 03_asymmetric_keys \
+               04_rsa_encrypt 04b_ecdh 05_signatures \
+               06_certificates 06b_cert_chain 07_tls
+
+      - name: Run lessons (smoke test)
+        run: |
+          ./01_hashing
+          ./02_aes_gcm
+          ./03_asymmetric_keys
