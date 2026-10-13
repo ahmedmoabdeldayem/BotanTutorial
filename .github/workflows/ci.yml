@@ -33,13 +33,10 @@ jobs:
         run: make setup
 
       - name: Build all lessons
-        run: |
-          make 01_hashing 02_aes_gcm 02b_aes_cbc 03_asymmetric_keys \
-               04_rsa_encrypt 04b_ecdh 05_signatures \
-               06_certificates 06b_cert_chain 07_tls 08_password_hashing
+        run: make all
 
       - name: Run lessons (smoke test)
         run: |
-          ./01_hashing
-          ./02_aes_gcm
-          ./03_asymmetric_keys
+          for bin in [0-9][0-9]*.cpp; do
+            ./"${bin%.cpp}"
+          done

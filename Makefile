@@ -2,6 +2,13 @@ CXX      = c++
 CXXFLAGS = -std=c++20 -I./include/botan-3 -Wall
 LDFLAGS  = -L./lib -lbotan-3 -Wl,-rpath,$(PWD)/lib
 
+# Auto-discover every lesson: any NN_*.cpp file becomes a target
+LESSONS := $(patsubst %.cpp,%,$(wildcard [0-9][0-9]*.cpp))
+
+.PHONY: all setup clean
+
+all: $(LESSONS)
+
 %: %.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@ $(LDFLAGS)
 
@@ -18,6 +25,4 @@ setup:
 	codesign --force --sign - lib/libbotan-3.dylib
 
 clean:
-	rm -f 01_hashing 02_aes_gcm 02b_aes_cbc 03_asymmetric_keys \
-	      04_rsa_encrypt 04b_ecdh 05_signatures 06_certificates \
-	      06b_cert_chain 07_tls 08_password_hashing rng_test
+	rm -f $(LESSONS) rng_test

@@ -103,9 +103,7 @@ SHA-3(256):
 ## Compiling All Lessons
 
 ```bash
-make 01_hashing 02_aes_gcm 02b_aes_cbc 03_asymmetric_keys \
-     04_rsa_encrypt 04b_ecdh 05_signatures \
-     06_certificates 06b_cert_chain 07_tls 08_password_hashing
+make all
 ```
 
 ---
