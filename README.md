@@ -20,6 +20,7 @@ The lessons follow a natural progression: start with hashing (no keys), move thr
 | 6 | `06_certificates.cpp` | X.509 Certificates — CA, CSR, signing, path verification | 3, 5 |
 | 6b | `06b_cert_chain.cpp` | Certificate Chains — Root → Intermediate → End Entity | 6 |
 | 7 | `07_tls.cpp` | TLS 1.3 — full handshake, cert auth, encrypted data | 6 |
+| 8 | `08_password_hashing.cpp` | Password Hashing — Argon2, bcrypt, PBKDF2 | 1 |
 
 ---
 
@@ -104,7 +105,7 @@ SHA-3(256):
 ```bash
 make 01_hashing 02_aes_gcm 02b_aes_cbc 03_asymmetric_keys \
      04_rsa_encrypt 04b_ecdh 05_signatures \
-     06_certificates 06b_cert_chain 07_tls
+     06_certificates 06b_cert_chain 07_tls 08_password_hashing
 ```
 
 ---
