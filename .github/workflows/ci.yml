@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build All Lessons
+    name: Build & Run All Lessons
     runs-on: macos-latest
 
     steps:
@@ -40,3 +40,58 @@ jobs:
           for bin in [0-9][0-9]*.cpp; do
             ./"${bin%.cpp}"
           done
+
+  sanitizers:
+    name: Sanitizers (ASan + UBSan)
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Cache Botan build
+        id: cache-botan
+        uses: actions/cache@v4
+        with:
+          path: |
+            include/
+            lib/
+            bin/
+          key: botan-${{ runner.os }}-${{ hashFiles('.gitmodules') }}-${{ github.sha }}
+          restore-keys: |
+            botan-${{ runner.os }}-${{ hashFiles('.gitmodules') }}-
+
+      - name: Build Botan from source
+        if: steps.cache-botan.outputs.cache-hit != 'true'
+        run: make setup
+
+      - name: Build all lessons with sanitizers
+        run: make all SANITIZE=1
+
+      - name: Run lessons under sanitizers
+        env:
+          ASAN_OPTIONS: detect_leaks=0:halt_on_error=1
+          UBSAN_OPTIONS: print_stacktrace=1:halt_on_error=1
+        run: |
+          for bin in [0-9][0-9]*.cpp; do
+            ./"${bin%.cpp}"
+          done
+
+  static-analysis:
+    name: cppcheck Static Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install cppcheck
+        run: sudo apt-get install -y cppcheck
+
+      - name: Run cppcheck
+        run: |
+          cppcheck --enable=warning,performance,portability \
+                   --std=c++20 \
+                   --error-exitcode=1 \
+                   --suppress=missingInclude \
+                   [0-9][0-9]*.cpp
