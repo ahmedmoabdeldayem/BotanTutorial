@@ -16,6 +16,13 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Update Botan to latest
+        run: git submodule update --remote botan-src
+
+      - name: Get Botan commit hash
+        id: botan-hash
+        run: echo "hash=$(git -C botan-src rev-parse HEAD)" >> $GITHUB_OUTPUT
+
       - name: Cache Botan build
         id: cache-botan
         uses: actions/cache@v4
@@ -24,9 +31,7 @@ jobs:
             include/
             lib/
             bin/
-          key: botan-${{ runner.os }}-${{ hashFiles('.gitmodules') }}-${{ github.sha }}
-          restore-keys: |
-            botan-${{ runner.os }}-${{ hashFiles('.gitmodules') }}-
+          key: botan-${{ runner.os }}-${{ steps.botan-hash.outputs.hash }}
 
       - name: Build Botan from source
         if: steps.cache-botan.outputs.cache-hit != 'true'
@@ -50,6 +55,13 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Update Botan to latest
+        run: git submodule update --remote botan-src
+
+      - name: Get Botan commit hash
+        id: botan-hash
+        run: echo "hash=$(git -C botan-src rev-parse HEAD)" >> $GITHUB_OUTPUT
+
       - name: Cache Botan build
         id: cache-botan
         uses: actions/cache@v4
@@ -58,9 +70,7 @@ jobs:
             include/
             lib/
             bin/
-          key: botan-${{ runner.os }}-${{ hashFiles('.gitmodules') }}-${{ github.sha }}
-          restore-keys: |
-            botan-${{ runner.os }}-${{ hashFiles('.gitmodules') }}-
+          key: botan-${{ runner.os }}-${{ steps.botan-hash.outputs.hash }}
 
       - name: Build Botan from source
         if: steps.cache-botan.outputs.cache-hit != 'true'
