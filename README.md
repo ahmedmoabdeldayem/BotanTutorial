@@ -23,6 +23,8 @@ The lessons follow a natural progression: start with hashing (no keys), move thr
 | 8 | `08_password_hashing.cpp` | Password Hashing — Argon2, bcrypt, PBKDF2 | 1 |
 | 9 | `09_key_derivation.cpp` | Key Derivation — PBKDF2, HKDF | 1 |
 | 10 | `10_hmac.cpp` | HMAC & Message Authentication | 1 |
+| 11 | `11_rng.cpp` | Random Number Generation — AutoRNG, SystemRNG | — |
+| 12 | `12_hybrid_encryption.cpp` | Hybrid Encryption — ECDH + HKDF + AES-256-GCM | 3, 4b, 2 |
 
 ---
 
