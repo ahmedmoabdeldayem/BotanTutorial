@@ -25,6 +25,11 @@ The lessons follow a natural progression: start with hashing (no keys), move thr
 | 10 | `10_hmac.cpp` | HMAC & Message Authentication | 1 |
 | 11 | `11_rng.cpp` | Random Number Generation — AutoRNG, SystemRNG | — |
 | 12 | `12_hybrid_encryption.cpp` | Hybrid Encryption — ECDH + HKDF + AES-256-GCM | 3, 4b, 2 |
+| 13 | `13_chacha20_poly1305.cpp` | ChaCha20-Poly1305 — AEAD cipher, TLS 1.3 alternative to AES-GCM | 2 |
+| 14 | `14_totp.cpp` | TOTP — Time-based One-Time Passwords (how 2FA apps work) | 10 |
+| 15 | `15_post_quantum.cpp` | Post-Quantum Cryptography — ML-KEM, ML-DSA, SLH-DSA (NIST FIPS 203/204/205) | — |
+| 16 | `16_shamir.cpp` | Shamir's Secret Sharing — K-of-N threshold scheme | — |
+| 17 | `17_envelope_encryption.cpp` | Envelope Encryption — DEK + KEK pattern (AWS/GCP/Vault) | 2, 3 |
 
 ---
 
